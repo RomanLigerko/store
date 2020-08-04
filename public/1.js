@@ -221,6 +221,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }(),
     addToViewedProducts: function addToViewedProducts(product) {
       localStorage.setItem(product.code, JSON.stringify(product));
+      console.log(localStorage);
     }
   }
 });
@@ -363,7 +364,7 @@ var render = function() {
                         on: {
                           submit: function($event) {
                             $event.preventDefault()
-                            return _vm.addToBasket(product)
+                            return _vm.addToBasket(product.id)
                           }
                         }
                       },

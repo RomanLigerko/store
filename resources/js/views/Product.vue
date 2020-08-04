@@ -1,11 +1,14 @@
 <template>
-    <div class="product" style="width: 70%; margin: 0 auto; border: 1px solid black">
-        Product
+    <div class="product" style="width: 70%; margin: 50px auto; display: flex">
+
 
         <div class=""><img :src="`${$store.state.serverPath}/storage/${productData.image}`" width="500px" alt=""></div>
-        <h2>{{productData.name}}</h2>
-        <div class="">Ціна: {{productData.price}}</div>
-        <div class="">Опис: {{productData.description}}</div>
+        <div class="product-data">
+            <h1>{{productData.name}}</h1>
+            <div class="" style=" margin-top: 50px "><b>Ціна:</b> {{productData.price}} грн.</div>
+            <div class="" style=" margin-top: 50px; width: 60%; ">{{productData.description}}</div>
+        </div>
+
     </div>
 </template>
 <script>

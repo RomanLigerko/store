@@ -25,9 +25,9 @@ class BasketController extends Controller
         }
 
         return response()->json([
-            'message' => 'Щось пішло не так. Спробуйте знову',
-            'status_code' => 500
-        ], 500);
+
+            'status_code' => 200
+        ], 200);
     }
 
 //    public function basketConfirm(Request $request)
@@ -60,15 +60,13 @@ class BasketController extends Controller
 
     public function basketAdd($productId)
     {
+
         $orderId = session('orderId');
-//        dd($orderId);
         if (is_null($orderId)) {
             $order = Order::create();
             session(['orderId' => $order->id]);
-//            dd($)
         } else {
             $order = Order::find($orderId);
-
         }
         if ($order->products->contains($productId)) {
             $pivotRow = $order->products()->where('product_id', $productId)->first()->pivot;

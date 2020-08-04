@@ -50,7 +50,10 @@
                         <div class="invalid-feedback" v-if="errors.name">{{errors.name[0]}}</div>
                     </div>
                     <div class="form-group">
-                        <label  for="code"><b>Категорія</b></label>
+                        <label  for="category"><b>Категорія</b></label>
+<!--                        <select id="category" v-model="productData.code" v-for="(category, index) in categories"  :key="index">-->
+<!--                            <option value="{{category.id}}">{{category.name}}</option>-->
+<!--                        </select>-->
                         <input type="text" class="form-control" id="category_id" v-model="productData.category_id" placeholder="Введіть id категорії">
                         <div class="invalid-feedback" v-if="errors.name">{{errors.name[0]}}</div>
                     </div>
@@ -136,11 +139,15 @@
     import * as productService from '../services/product_service.js'
     import {loadProducts} from "../services/product_service";
 
+    import * as categoryService from '../services/category_service.js'
+    import {loadCategories} from "../services/category_service";
+
     export default {
         name: 'products',
         data(){
             return{
                 products: [],
+                categories: [],
                 productData:{
                     name: '',
                     code: '',
@@ -158,6 +165,17 @@
             this.loadProducts()
         },
         methods:{
+            loadCategories: async function(){
+                try{
+                    const response = await categoryService.loadCategories()
+                    console.log(response)
+                    this.categories = response.data.data
+                }catch {
+                    this.flashMessage.error({
+                        message: 'Не вдалось завантажити. обновіть сторінку',
+                    })
+                }
+            },
             loadProducts: async function(){
                 try{
                     const response = await productService.loadProducts()

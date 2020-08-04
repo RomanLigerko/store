@@ -39,7 +39,7 @@
                     </div>
                 </div>
             </div>
-<!--            <Viewed></Viewed>-->
+            <Viewed v-if="this.showViewed=true"></Viewed>
 
         </div>
 
@@ -71,6 +71,7 @@
         name: 'welcome',
         data() {
             return {
+                showViewed: false,
                 categories: [],
                 products: [],
                 order: {},
@@ -114,7 +115,6 @@
             addToBasket: async function (product_id) {
                 try {
                     const response = await basketService.addToBasket(product_id)
-                    // await conole.log()
                     this.order = response.data
                 } catch {
                     this.flashMessage.error({
@@ -125,9 +125,6 @@
             },
             addToViewedProducts(product) {
                     localStorage.setItem(product.code, JSON.stringify(product));
-                    let item = localStorage.getItem("hohol")
-                    console.log(item)
-
             },
         },
     }

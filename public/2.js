@@ -28,6 +28,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
  // import {loadCategories} from "../services/category_service";
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -108,10 +111,9 @@ var render = function() {
     "div",
     {
       staticClass: "product",
-      staticStyle: { width: "70%", margin: "0 auto", border: "1px solid black" }
+      staticStyle: { width: "70%", margin: "50px auto", display: "flex" }
     },
     [
-      _vm._v("\n    Product\n\n    "),
       _c("div", {}, [
         _c("img", {
           attrs: {
@@ -123,11 +125,18 @@ var render = function() {
         })
       ]),
       _vm._v(" "),
-      _c("h2", [_vm._v(_vm._s(_vm.productData.name))]),
-      _vm._v(" "),
-      _c("div", {}, [_vm._v("Ціна: " + _vm._s(_vm.productData.price))]),
-      _vm._v(" "),
-      _c("div", {}, [_vm._v("Опис: " + _vm._s(_vm.productData.description))])
+      _c("div", { staticClass: "product-data" }, [
+        _c("h1", [_vm._v(_vm._s(_vm.productData.name))]),
+        _vm._v(" "),
+        _c("div", { staticStyle: { "margin-top": "50px" } }, [
+          _c("b", [_vm._v("Ціна:")]),
+          _vm._v(" " + _vm._s(_vm.productData.price) + " грн.")
+        ]),
+        _vm._v(" "),
+        _c("div", { staticStyle: { "margin-top": "50px", width: "60%" } }, [
+          _vm._v(_vm._s(_vm.productData.description))
+        ])
+      ])
     ]
   )
 }

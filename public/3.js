@@ -12,6 +12,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _services_product_service_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../services/product_service.js */ "./resources/js/services/product_service.js");
+/* harmony import */ var _services_category_service_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/category_service.js */ "./resources/js/services/category_service.js");
 
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
@@ -158,6 +159,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -165,6 +171,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   data: function data() {
     return {
       products: [],
+      categories: [],
       productData: {
         name: '',
         code: '',
@@ -182,8 +189,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     this.loadProducts();
   },
   methods: {
-    loadProducts: function () {
-      var _loadProducts = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+    loadCategories: function () {
+      var _loadCategories = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
         var response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
@@ -191,27 +198,66 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 _context.prev = 0;
                 _context.next = 3;
-                return _services_product_service_js__WEBPACK_IMPORTED_MODULE_1__["loadProducts"]();
+                return _services_category_service_js__WEBPACK_IMPORTED_MODULE_2__["loadCategories"]();
 
               case 3:
                 response = _context.sent;
+                console.log(response);
+                this.categories = response.data.data;
+                _context.next = 11;
+                break;
+
+              case 8:
+                _context.prev = 8;
+                _context.t0 = _context["catch"](0);
+                this.flashMessage.error({
+                  message: 'Не вдалось завантажити. обновіть сторінку'
+                });
+
+              case 11:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this, [[0, 8]]);
+      }));
+
+      function loadCategories() {
+        return _loadCategories.apply(this, arguments);
+      }
+
+      return loadCategories;
+    }(),
+    loadProducts: function () {
+      var _loadProducts = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.prev = 0;
+                _context2.next = 3;
+                return _services_product_service_js__WEBPACK_IMPORTED_MODULE_1__["loadProducts"]();
+
+              case 3:
+                response = _context2.sent;
                 this.products = response.data;
-                _context.next = 10;
+                _context2.next = 10;
                 break;
 
               case 7:
-                _context.prev = 7;
-                _context.t0 = _context["catch"](0);
+                _context2.prev = 7;
+                _context2.t0 = _context2["catch"](0);
                 this.flashMessage.error({
                   message: 'Не вдалось завантажити. обновіть сторінку'
                 });
 
               case 10:
               case "end":
-                return _context.stop();
+                return _context2.stop();
             }
           }
-        }, _callee, this, [[0, 7]]);
+        }, _callee2, this, [[0, 7]]);
       }));
 
       function loadProducts() {
@@ -235,11 +281,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.$refs.newProductModal.show();
     },
     createProduct: function () {
-      var _createProduct = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+      var _createProduct = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
         var formData, response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
           while (1) {
-            switch (_context2.prev = _context2.next) {
+            switch (_context3.prev = _context3.next) {
               case 0:
                 formData = new FormData();
                 formData.append('name', this.productData.name);
@@ -248,12 +294,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 formData.append('price', this.productData.price);
                 formData.append('description', this.productData.description);
                 formData.append('image', this.productData.image);
-                _context2.prev = 7;
-                _context2.next = 10;
+                _context3.prev = 7;
+                _context3.next = 10;
                 return _services_product_service_js__WEBPACK_IMPORTED_MODULE_1__["createProduct"](formData);
 
               case 10:
-                response = _context2.sent;
+                response = _context3.sent;
                 this.products.unshift(response.data);
                 console.log(response);
                 this.hideNewProductModal();
@@ -261,36 +307,36 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   message: 'Ви успішно створили новий товар',
                   time: 4000
                 });
-                _context2.next = 26;
+                _context3.next = 26;
                 break;
 
               case 17:
-                _context2.prev = 17;
-                _context2.t0 = _context2["catch"](7);
-                _context2.t1 = _context2.t0.response.status;
-                _context2.next = _context2.t1 === 422 ? 22 : 24;
+                _context3.prev = 17;
+                _context3.t0 = _context3["catch"](7);
+                _context3.t1 = _context3.t0.response.status;
+                _context3.next = _context3.t1 === 422 ? 22 : 24;
                 break;
 
               case 22:
-                this.errors = _context2.t0.response.data.errors;
-                return _context2.abrupt("break", 26);
+                this.errors = _context3.t0.response.data.errors;
+                return _context3.abrupt("break", 26);
 
               case 24:
                 this.flashMessage.error({
                   message: 'Щось пішло не так. Спробуйте знову',
                   time: 4000
                 });
-                return _context2.abrupt("break", 26);
+                return _context3.abrupt("break", 26);
 
               case 26:
                 console.log("form submitted");
 
               case 27:
               case "end":
-                return _context2.stop();
+                return _context3.stop();
             }
           }
-        }, _callee2, this, [[7, 17]]);
+        }, _callee3, this, [[7, 17]]);
       }));
 
       function createProduct() {
@@ -300,26 +346,26 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       return createProduct;
     }(),
     deleteProduct: function () {
-      var _deleteProduct = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(product) {
+      var _deleteProduct = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4(product) {
         var r;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
           while (1) {
-            switch (_context3.prev = _context3.next) {
+            switch (_context4.prev = _context4.next) {
               case 0:
                 if (window.confirm("\u0412\u0438 \u0432\u043F\u0435\u0432\u043D\u0435\u043D\u0456, \u0449\u043E \u0445\u043E\u0447\u0435\u0442\u0435 \u0432\u0438\u0434\u0430\u043B\u0438\u0442\u0438 \u0442\u043E\u0432\u0430\u0440 ".concat(product.name, "?"))) {
-                  _context3.next = 2;
+                  _context4.next = 2;
                   break;
                 }
 
-                return _context3.abrupt("return");
+                return _context4.abrupt("return");
 
               case 2:
-                _context3.prev = 2;
-                _context3.next = 5;
+                _context4.prev = 2;
+                _context4.next = 5;
                 return _services_product_service_js__WEBPACK_IMPORTED_MODULE_1__["deleteProduct"](product.id);
 
               case 5:
-                r = _context3.sent;
+                r = _context4.sent;
                 console.log(r);
                 this.products = this.products.filter(function (obj) {
                   return obj.id != product.id;
@@ -328,20 +374,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   message: 'Категорію успішно видалено',
                   time: 4000
                 });
-                _context3.next = 14;
+                _context4.next = 14;
                 break;
 
               case 11:
-                _context3.prev = 11;
-                _context3.t0 = _context3["catch"](2);
-                console.log(_context3.t0);
+                _context4.prev = 11;
+                _context4.t0 = _context4["catch"](2);
+                console.log(_context4.t0);
 
               case 14:
               case "end":
-                return _context3.stop();
+                return _context4.stop();
             }
           }
-        }, _callee3, this, [[2, 11]]);
+        }, _callee4, this, [[2, 11]]);
       }));
 
       function deleteProduct(_x) {
@@ -369,13 +415,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       reader.readAsDataURL(this.editProductData.image);
     },
     updateProduct: function () {
-      var _updateProduct = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+      var _updateProduct = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
         var formData, response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
           while (1) {
-            switch (_context4.prev = _context4.next) {
+            switch (_context5.prev = _context5.next) {
               case 0:
-                _context4.prev = 0;
+                _context5.prev = 0;
                 formData = new FormData();
                 formData.append('name', this.editProductData.name);
                 formData.append('code', this.editProductData.code);
@@ -384,11 +430,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 formData.append('description', this.editProductData.description);
                 formData.append('image', this.editProductData.image);
                 formData.append('_method', 'put');
-                _context4.next = 11;
+                _context5.next = 11;
                 return _services_product_service_js__WEBPACK_IMPORTED_MODULE_1__["updateProduct"](this.editProductData.id, formData);
 
               case 11:
-                response = _context4.sent;
+                response = _context5.sent;
                 this.products.map(function (product) {
                   if (product.id == response.data.id) {
                     for (var key in response.data) {
@@ -401,23 +447,23 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   message: 'Товар успішно змінено',
                   time: 4000
                 });
-                _context4.next = 20;
+                _context5.next = 20;
                 break;
 
               case 17:
-                _context4.prev = 17;
-                _context4.t0 = _context4["catch"](0);
-                console.log(_context4.t0);
+                _context5.prev = 17;
+                _context5.t0 = _context5["catch"](0);
+                console.log(_context5.t0);
 
               case 20:
                 console.log('update');
 
               case 21:
               case "end":
-                return _context4.stop();
+                return _context5.stop();
             }
           }
-        }, _callee4, this, [[0, 17]]);
+        }, _callee5, this, [[0, 17]]);
       }));
 
       function updateProduct() {
@@ -462,7 +508,7 @@ var render = function() {
             },
             [
               _c("span", { staticClass: "fa fa-plus" }),
-              _vm._v("\n                Створити новий\n            ")
+              _vm._v("\n                    Створити новий\n                ")
             ]
           )
         ]),
@@ -593,7 +639,7 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "form-group" }, [
-                  _c("label", { attrs: { for: "code" } }, [
+                  _c("label", { attrs: { for: "category" } }, [
                     _c("b", [_vm._v("Категорія")])
                   ]),
                   _vm._v(" "),

@@ -1,28 +1,29 @@
 <template>
     <div class="" style="margin-top: 70px">
-        <h3>Переглянуті товари</h3>
+        <h3 v-if="this.showViewed==true">Переглянуті товари</h3>
         <div class="viewed-products">
-            <div class="col-sm-4 col-md-2 card" v-for="(product, index) in viewedProducts" :key="index" >
+            <div class="col-sm-4 col-md-2 card" v-for="(product, index) in array" :key="index" >
                 <div class="thumbnail">
-                    <img src="http://internet-shop.tmweb.ru/storage/products/iphone_x.jpg" width="130px" alt="iPhone X 64GB">
+                    <img :src="`${$store.state.serverPath}/storage/${product.image}`" width="110px" alt="iPhone X 64GB">
                     <div class="caption">
                         <p><b>{{product.name}}</b></p>
-                        <p>{{product.price}} грн.</p>
-                        <p>
-                        </p>
                     </div>
                     <div style="display: flex;">
                         <router-link :to="`/${product.category_code}/${product.code}`" >
                             <button class="btn btn-secondary btn-sm">Детальніше</button>
                         </router-link>
-                        <form v-on:submit.prevent="addToBasket(product)">
+                        <form v-on:submit.prevent="addToBasket(product.id)">
                             <button id="formBtn" class="btn btn-primary btn-sm"  type="submit">В корзину</button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
+        <b-modal ref="Basket" hide-footer title="Корзина покупок" id="Basket">
+            <Basket></Basket>
+        </b-modal>
     </div>
+
 
 </template>
 
@@ -30,70 +31,68 @@
 
     import * as productService from "../services/product_service";
     import * as basketService from '../services/basket_service.js'
+    import Basket from '../components/Basket.vue';
+
     export default {
+        components: {
+          Basket
+        },
         name: 'viewed',
         mounted() {
 
             this.loadProducts()
-            this.loadViewedProducts()
         },
         data(){
             return{
+                showViewed: false,
+                array: [],
                 products: [],
                 viewedProducts: [],
             }
         },
         methods: {
+            checkData(){
+                // console.log(this.array.length)
+              if(this.array.length<1){
+                 this.showViewed = false
+                }else{
+                  this.showViewed = true
+              }
+            },
             loadProducts: async function(){
-                try{
+                try {
                     const response = await productService.loadProducts()
                     this.products = response.data
-                    var array = []
-                    this.products.forEach(element => {
-                        let item = JSON.parse(localStorage.getItem(element.code))
-                        console.log(item)
-                        if(item != null){
-                            array.push(item)
+                    this.products.forEach((element) => {
+                        for (let i = 0; i <= localStorage.length; i++) {
+                            if (localStorage.key(i) == element.code) {
+                                this.array.push(element)
+                            }
                         }
+                        this.checkData()
                     })
-                    this.viewedProducts = array
-                    console.log(this.viewedProducts[0].name)
-                }catch {
+                } catch {
                     this.flashMessage.error({
                         message: 'Не вдалось завантажити. обновіть сторінку',
                     })
                 }
             },
-            loadViewedProducts(){
-
-
-
-
-                console.log(data)
-                // this.products.forEach(element => console.log(element.code));
-                // localStorage.getItem()
-                // let store = []
-                // console.log("DATA:")
-                // for(let i = 0; i<=localStorage.length; i++){
-                //     for(let y = 0; y<=this.products.length; y++){
-                //         if(localStorage.key(i)==this.products[y].code){
-                //             console.log(localStorage.key(i))
-                //         }
-                //     }
-                //     console.log(localStorage.key(i))
-                // }
-                // console.log(localStorage.getItem('hohol'))/
-            },
             addToBasket: async function (product_id) {
                 try {
                     const response = await basketService.addToBasket(product_id)
-                    // this.order = response.data
                 } catch {
                     this.flashMessage.error({
                         message: 'Не вдалось додати товар. Спробуте ще раз',
                     })
                 }
                 this.showBasket()
+            },
+            hideBasket() {
+                this.$refs.Basket.hide()
+            },
+            showBasket() {
+
+                this.$refs.Basket.show()
             },
         }
 

@@ -2065,6 +2065,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     Header: _components_HeaderComponent_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  mounted: function mounted() {
+    console.log(this.$route.path);
   }
 });
 
@@ -2351,6 +2354,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _services_product_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../services/product_service */ "./resources/js/services/product_service.js");
 /* harmony import */ var _services_basket_service_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/basket_service.js */ "./resources/js/services/basket_service.js");
+/* harmony import */ var _components_Basket_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/Basket.vue */ "./resources/js/components/Basket.vue");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -2385,24 +2389,40 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    Basket: _components_Basket_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
+  },
   name: 'viewed',
   mounted: function mounted() {
     this.loadProducts();
-    this.loadViewedProducts();
   },
   data: function data() {
     return {
+      showViewed: false,
+      array: [],
       products: [],
       viewedProducts: []
     };
   },
   methods: {
+    checkData: function checkData() {
+      // console.log(this.array.length)
+      if (this.array.length < 1) {
+        this.showViewed = false;
+      } else {
+        this.showViewed = true;
+      }
+    },
     loadProducts: function () {
       var _loadProducts = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var response, array;
+        var _this = this;
+
+        var response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -2414,33 +2434,31 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 3:
                 response = _context.sent;
                 this.products = response.data;
-                array = [];
                 this.products.forEach(function (element) {
-                  var item = JSON.parse(localStorage.getItem(element.code));
-                  console.log(item);
-
-                  if (item != null) {
-                    array.push(item);
+                  for (var i = 0; i <= localStorage.length; i++) {
+                    if (localStorage.key(i) == element.code) {
+                      _this.array.push(element);
+                    }
                   }
+
+                  _this.checkData();
                 });
-                this.viewedProducts = array;
-                console.log(this.viewedProducts[0].name);
-                _context.next = 14;
+                _context.next = 11;
                 break;
 
-              case 11:
-                _context.prev = 11;
+              case 8:
+                _context.prev = 8;
                 _context.t0 = _context["catch"](0);
                 this.flashMessage.error({
                   message: 'Не вдалось завантажити. обновіть сторінку'
                 });
 
-              case 14:
+              case 11:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, this, [[0, 11]]);
+        }, _callee, this, [[0, 8]]);
       }));
 
       function loadProducts() {
@@ -2449,21 +2467,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       return loadProducts;
     }(),
-    loadViewedProducts: function loadViewedProducts() {
-      console.log(data); // this.products.forEach(element => console.log(element.code));
-      // localStorage.getItem()
-      // let store = []
-      // console.log("DATA:")
-      // for(let i = 0; i<=localStorage.length; i++){
-      //     for(let y = 0; y<=this.products.length; y++){
-      //         if(localStorage.key(i)==this.products[y].code){
-      //             console.log(localStorage.key(i))
-      //         }
-      //     }
-      //     console.log(localStorage.key(i))
-      // }
-      // console.log(localStorage.getItem('hohol'))/
-    },
     addToBasket: function () {
       var _addToBasket = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(product_id) {
         var response;
@@ -2503,7 +2506,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }
 
       return addToBasket;
-    }()
+    }(),
+    hideBasket: function hideBasket() {
+      this.$refs.Basket.hide();
+    },
+    showBasket: function showBasket() {
+      this.$refs.Basket.show();
+    }
   }
 });
 
@@ -2600,6 +2609,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   name: 'welcome',
   data: function data() {
     return {
+      showViewed: false,
       categories: [],
       products: [],
       order: {}
@@ -2732,7 +2742,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 3:
                 response = _context4.sent;
-                // await conole.log()
                 this.order = response.data;
                 _context4.next = 10;
                 break;
@@ -2763,8 +2772,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }(),
     addToViewedProducts: function addToViewedProducts(product) {
       localStorage.setItem(product.code, JSON.stringify(product));
-      var item = localStorage.getItem("hohol");
-      console.log(item);
     }
   }
 });
@@ -66838,86 +66845,99 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticStyle: { "margin-top": "70px" } }, [
-    _c("h3", [_vm._v("Переглянуті товари")]),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "viewed-products" },
-      _vm._l(_vm.viewedProducts, function(product, index) {
-        return _c(
-          "div",
-          { key: index, staticClass: "col-sm-4 col-md-2 card" },
-          [
-            _c("div", { staticClass: "thumbnail" }, [
-              _c("img", {
-                attrs: {
-                  src:
-                    "http://internet-shop.tmweb.ru/storage/products/iphone_x.jpg",
-                  width: "130px",
-                  alt: "iPhone X 64GB"
-                }
-              }),
-              _vm._v(" "),
-              _c("div", { staticClass: "caption" }, [
-                _c("p", [_c("b", [_vm._v(_vm._s(product.name))])]),
+  return _c(
+    "div",
+    { staticStyle: { "margin-top": "70px" } },
+    [
+      this.showViewed == true
+        ? _c("h3", [_vm._v("Переглянуті товари")])
+        : _vm._e(),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "viewed-products" },
+        _vm._l(_vm.array, function(product, index) {
+          return _c(
+            "div",
+            { key: index, staticClass: "col-sm-4 col-md-2 card" },
+            [
+              _c("div", { staticClass: "thumbnail" }, [
+                _c("img", {
+                  attrs: {
+                    src:
+                      _vm.$store.state.serverPath + "/storage/" + product.image,
+                    width: "110px",
+                    alt: "iPhone X 64GB"
+                  }
+                }),
                 _vm._v(" "),
-                _c("p", [_vm._v(_vm._s(product.price) + " грн.")]),
+                _c("div", { staticClass: "caption" }, [
+                  _c("p", [_c("b", [_vm._v(_vm._s(product.name))])])
+                ]),
                 _vm._v(" "),
-                _c("p")
-              ]),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticStyle: { display: "flex" } },
-                [
-                  _c(
-                    "router-link",
-                    {
-                      attrs: {
-                        to: "/" + product.category_code + "/" + product.code
-                      }
-                    },
-                    [
-                      _c(
-                        "button",
-                        { staticClass: "btn btn-secondary btn-sm" },
-                        [_vm._v("Детальніше")]
-                      )
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "form",
-                    {
-                      on: {
-                        submit: function($event) {
-                          $event.preventDefault()
-                          return _vm.addToBasket(product)
+                _c(
+                  "div",
+                  { staticStyle: { display: "flex" } },
+                  [
+                    _c(
+                      "router-link",
+                      {
+                        attrs: {
+                          to: "/" + product.category_code + "/" + product.code
                         }
-                      }
-                    },
-                    [
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-primary btn-sm",
-                          attrs: { id: "formBtn", type: "submit" }
-                        },
-                        [_vm._v("В корзину")]
-                      )
-                    ]
-                  )
-                ],
-                1
-              )
-            ])
-          ]
-        )
-      }),
-      0
-    )
-  ])
+                      },
+                      [
+                        _c(
+                          "button",
+                          { staticClass: "btn btn-secondary btn-sm" },
+                          [_vm._v("Детальніше")]
+                        )
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "form",
+                      {
+                        on: {
+                          submit: function($event) {
+                            $event.preventDefault()
+                            return _vm.addToBasket(product.id)
+                          }
+                        }
+                      },
+                      [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-primary btn-sm",
+                            attrs: { id: "formBtn", type: "submit" }
+                          },
+                          [_vm._v("В корзину")]
+                        )
+                      ]
+                    )
+                  ],
+                  1
+                )
+              ])
+            ]
+          )
+        }),
+        0
+      ),
+      _vm._v(" "),
+      _c(
+        "b-modal",
+        {
+          ref: "Basket",
+          attrs: { "hide-footer": "", title: "Корзина покупок", id: "Basket" }
+        },
+        [_c("Basket")],
+        1
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -66964,7 +66984,7 @@ var render = function() {
             },
             [
               _c("router-link", { attrs: { to: "/" } }),
-              _vm._v("\n                Усі категорії\n            ")
+              _vm._v("\n            Усі категорії\n        ")
             ],
             1
           ),
@@ -67000,99 +67020,107 @@ var render = function() {
         2
       ),
       _vm._v(" "),
-      _c("div", { staticClass: "welcome__main" }, [
-        _c(
-          "div",
-          { staticClass: "row" },
-          _vm._l(_vm.products, function(product, index) {
-            return _c(
-              "div",
-              {
-                key: index,
-                staticClass: "col-sm-4 col-md-2 card",
-                on: { click: _vm.goToProduct }
-              },
-              [
-                _c("div", { staticClass: "thumbnail" }, [
-                  _c("img", {
-                    attrs: {
-                      src:
-                        _vm.$store.state.serverPath +
-                        "/storage/" +
-                        product.image,
-                      width: "130px",
-                      alt: "iPhone X 64GB"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "caption" }, [
-                    _c("p", [_c("b", [_vm._v(_vm._s(product.name))])]),
+      _c(
+        "div",
+        { staticClass: "welcome__main" },
+        [
+          _c(
+            "div",
+            { staticClass: "row" },
+            _vm._l(_vm.products, function(product, index) {
+              return _c(
+                "div",
+                {
+                  key: index,
+                  staticClass: "col-sm-4 col-md-2 card",
+                  on: { click: _vm.goToProduct }
+                },
+                [
+                  _c("div", { staticClass: "thumbnail" }, [
+                    _c("img", {
+                      attrs: {
+                        src:
+                          _vm.$store.state.serverPath +
+                          "/storage/" +
+                          product.image,
+                        width: "130px",
+                        alt: "iPhone X 64GB"
+                      }
+                    }),
                     _vm._v(" "),
-                    _c("p", [_vm._v(_vm._s(product.price) + " грн.")])
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticStyle: { display: "flex" } },
-                    [
-                      _c(
-                        "router-link",
-                        {
-                          attrs: {
-                            to: "/" + product.category_code + "/" + product.code
-                          }
-                        },
-                        [
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-secondary btn-sm",
-                              on: {
-                                click: function($event) {
-                                  return _vm.addToViewedProducts(product)
-                                }
-                              }
-                            },
-                            [
-                              _vm._v(
-                                "\n                                    Детальніше\n                                "
-                              )
-                            ]
-                          )
-                        ]
-                      ),
+                    _c("div", { staticClass: "caption" }, [
+                      _c("p", [_c("b", [_vm._v(_vm._s(product.name))])]),
                       _vm._v(" "),
-                      _c(
-                        "form",
-                        {
-                          on: {
-                            submit: function($event) {
-                              $event.preventDefault()
-                              return _vm.addToBasket(product.id)
+                      _c("p", [_vm._v(_vm._s(product.price) + " грн.")])
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticStyle: { display: "flex" } },
+                      [
+                        _c(
+                          "router-link",
+                          {
+                            attrs: {
+                              to:
+                                "/" + product.category_code + "/" + product.code
                             }
-                          }
-                        },
-                        [
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-primary btn-sm",
-                              attrs: { id: "formBtn", type: "submit" }
-                            },
-                            [_vm._v("В корзину")]
-                          )
-                        ]
-                      )
-                    ],
-                    1
-                  )
-                ])
-              ]
-            )
-          }),
-          0
-        )
-      ]),
+                          },
+                          [
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-secondary btn-sm",
+                                on: {
+                                  click: function($event) {
+                                    return _vm.addToViewedProducts(product)
+                                  }
+                                }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                                Детальніше\n                            "
+                                )
+                              ]
+                            )
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "form",
+                          {
+                            on: {
+                              submit: function($event) {
+                                $event.preventDefault()
+                                return _vm.addToBasket(product.id)
+                              }
+                            }
+                          },
+                          [
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-primary btn-sm",
+                                attrs: { id: "formBtn", type: "submit" }
+                              },
+                              [_vm._v("В корзину")]
+                            )
+                          ]
+                        )
+                      ],
+                      1
+                    )
+                  ])
+                ]
+              )
+            }),
+            0
+          ),
+          _vm._v(" "),
+          (this.showViewed = true) ? _c("Viewed") : _vm._e()
+        ],
+        1
+      ),
       _vm._v(" "),
       _c(
         "b-modal",

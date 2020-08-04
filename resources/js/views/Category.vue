@@ -27,7 +27,7 @@
                                     Детальніше
                                 </button>
                             </router-link>
-                            <form v-on:submit.prevent="addToBasket(product)">
+                            <form v-on:submit.prevent="addToBasket(product.id)">
                                 <button id="formBtn" class="btn btn-primary btn-sm" type="submit">В корзину</button>
                             </form>
                         </div>
@@ -93,6 +93,7 @@
             },
             addToViewedProducts(product) {
                 localStorage.setItem(product.code, JSON.stringify(product))
+                console.log(localStorage)
             },
         },
 
