@@ -1,1 +1,143 @@
-//
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+*{
+    box-sizing: border-box;
+}
+html,body{
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+.header{
+    background-color: #343A42;
+    //color: white;
+    width: 100%;
+    height: 70px;
+    //padding: 15px;
+    & a{
+        text-decoration: none !important;
+        color: white !important;
+        background-color: #343A42 !important;
+    }
+    &__nav{
+        height: 100%;
+    }
+    &__nav-menu{
+        height: 100%;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        & li{
+            cursor: pointer;
+            text-decoration: none;
+            list-style: none;
+            padding: 10px;
+        }
+    }
+}
+#content-wrapper{
+    height: 100vh;
+}
+//#wrapper{
+//    display: flex;
+//    justify-content: space-between;
+//}
+.sidebar{
+    width: 20%;
+    border: 1px solid red;
+    height: 100vh;
+    margin: 5px;
+}
+
+.content-main{
+    width: 80%;
+    height: 100vh;
+    margin: 5px;
+}
+.sidebar li{
+    list-style: none;
+    text-decoration: none;
+}
+.active{
+    background-color: #4dc0b5;
+}
+.modal-backdrop{
+    background-color: rgba(0,0,0,0.5) !important;
+}
+.invalid-feedback{
+    display: inline-block !important;
+}
+.table{
+    th,td{
+        vertical-align: middle !important;
+        font-weight: normal;
+    }
+    font-weight: normal;
+}
+button{
+    cursor: pointer;
+}
+.table th, .table td{
+    border: none !important;
+}
+.welcome{
+    &__container{
+        & a{
+            text-decoration: none !important;
+            color: black !important;
+            background-color: white;
+        }
+        & .card{
+            margin: 10px;
+            cursor: pointer;
+            margin-left: 2.3%;
+            text-align: center;
+            align-items: center;
+            //max-width: 10%;
+        }
+        & .card:hover {
+            -webkit-transform: scale(1.1);
+            -ms-transform: scale(1.1);
+            transform: scale(1.1);
+            transition: all 0.2s ease-out;
+        }
+        height: 100vh;
+        display: flex;
+    }
+    &__sidebar{
+        padding: 5px;
+        //border: 1px solid red;
+        width: 20%;
+    }
+    &__main{
+        padding: 5px;
+        //border: 1px solid red;
+        width: 80%;
+    }
+}
+.card{
+    padding: 10px;
+}
+#Basket .modal-dialog{
+    max-width: 80% !important;
+}
+.viewed-products{
+
+    height: 300px;
+    width: 94%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    display: flex;
+}
+.card .caption p{
+    height: 50px;
+    margin-top: 5px;
+}
